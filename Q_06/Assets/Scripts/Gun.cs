@@ -10,8 +10,12 @@ public class Gun : MonoBehaviour
     
     public void Fire(Transform origin)
     {
-        Ray ray = new(origin.position, Vector3.forward);
+        // 월드 기준에서 수정
+        Ray ray = new(origin.position, origin.forward);
         RaycastHit hit;
+
+        // 디버그 레이
+        Debug.DrawRay(ray.origin, ray.direction * _range, Color.red, 1f);
 
         if (Physics.Raycast(ray, out hit, _range, _targetLayer))
         {
