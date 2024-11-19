@@ -25,6 +25,19 @@ public class TurretController : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // 코르틴이 동작 중일때만 실행하게 변경
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
+        }
+    }
+
     private void Init()
     {
         _coroutine = null;
@@ -53,6 +66,11 @@ public class TurretController : MonoBehaviour
 
     private void Fire(Transform target)
     {
+        // 중첩되서 실행 될 수도 있으니 코르틴 실행 중일때는 멈추고 실행하게 구현
+        if (_coroutine != null)
+        { 
+            StopCoroutine(_coroutine);
+        }
         _coroutine = StartCoroutine(FireRoutine(target));
     }
 }
