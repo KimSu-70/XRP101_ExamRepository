@@ -22,7 +22,8 @@ public class StateAttack : PlayerState
 
     public override void Enter()
     {
-        Controller.StartCoroutine(DelayRoutine(Attack));
+        // DelayRoutine Attack();을 호출하므로 내용 수정
+        Controller.StartCoroutine(DelayRoutine());
     }
 
     public override void OnUpdate()
@@ -32,7 +33,8 @@ public class StateAttack : PlayerState
 
     public override void Exit()
     {
-        Machine.ChangeState(StateType.Idle);
+        // Exit 패턴이 종료될때 호출하면 계속해서 반복 호출하므로 주석처리
+        // Machine.ChangeState(StateType.Idle);
     }
 
     private void Attack()
@@ -46,16 +48,20 @@ public class StateAttack : PlayerState
         foreach (Collider col in cols)
         {
             damagable = col.GetComponent<IDamagable>();
-            damagable.TakeHit(Controller.AttackValue);
+            if (damagable != null)
+            {
+                damagable.TakeHit(Controller.AttackValue);
+            }
         }
     }
 
-    public IEnumerator DelayRoutine(Action action)
+    public IEnumerator DelayRoutine()
     {
         yield return _wait;
 
         Attack();
-        Exit();
+        // 공격이 끝났을 때 상태 변경하도록 수정
+        Machine.ChangeState(StateType.Idle);
     }
 
 }
