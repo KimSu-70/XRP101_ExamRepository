@@ -24,6 +24,10 @@ public class CameraController : MonoBehaviour
     {
         if (!_hasFollowTarget) return;
 
+        Camera cam = Camera.main;
+        cam.transform.position = _followTarget.position;
+        cam.transform.rotation = _followTarget.rotation;
+
         //_followTarget.SetPositionAndRotation(
         //    transform.position,
         //    transform.rotation
