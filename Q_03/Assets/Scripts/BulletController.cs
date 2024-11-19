@@ -40,6 +40,8 @@ public class BulletController : PooledBehaviour
     
     private void Fire()
     {
+        // 총알 발사 전에 속도값 0으로 초기화 하여 속도의 증가를 방지
+        _rigidbody.velocity = Vector3.zero;
         _rigidbody.AddForce(transform.forward * _force, ForceMode.Impulse);
     }
 
