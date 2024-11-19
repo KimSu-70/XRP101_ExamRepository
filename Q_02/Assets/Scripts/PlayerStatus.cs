@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
+    private float moveSpeed;
     public float MoveSpeed
     {
-        get => MoveSpeed;
-        private set => MoveSpeed = value;
+        // 자기 자신을 반환하기 때문에 무한으로 반복된다.
+        // get => MoveSpeed;
+        // private set => MoveSpeed = value;
+        get => moveSpeed;
+        private set => moveSpeed = value;
     }
 
     private void Awake()
@@ -17,6 +21,6 @@ public class PlayerStatus : MonoBehaviour
 
     private void Init()
     {
-        MoveSpeed = 5f;
+        moveSpeed = 5f;
     }
 }
